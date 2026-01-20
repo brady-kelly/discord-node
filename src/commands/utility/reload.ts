@@ -25,13 +25,15 @@ export async function execute(interaction: ChatInputCommandInteraction) {
     );
   }
 
-  const commandFilePath = path.join(
-    process.cwd(),
-    "src",
-    "commands",
-    `${command.data.name}.ts`,
-  );
-  const moduleURL = `${pathToFileURL(commandFilePath).href}?update=${Date.now()}`;
+  // const commandFilePath = path.join(
+  //   process.cwd(),
+  //   "src",
+  //   "commands",
+  //   `${command.data.name}.js`,
+  // );
+
+  // const moduleURL = `${pathToFileURL(commandFilePath).href}?update=${Date.now()}`;
+  const moduleURL = `${pathToFileURL(command.filePath).href}?update=${Date.now()}`;
 
   try {
     const newModule = await import(moduleURL);
@@ -42,6 +44,7 @@ export async function execute(interaction: ChatInputCommandInteraction) {
         'The reloaded file is missing "data" or "execute" properties.',
       );
     }
+    newCommand.filePath = command.filePath;
     interaction.client.commands.set(newCommand.data.name, newCommand);
 
     await interaction.reply(
