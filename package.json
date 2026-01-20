@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "tsx watch src/commands/index.ts",
+    "dep": "tsx deploy-commands.ts",
     "start": "node dist/index.js",
     "build": "tsup src/index.ts --minify"
   },

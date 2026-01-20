@@ -7,19 +7,10 @@ import {
   GatewayIntentBits,
   MessageFlags,
 } from "discord.js";
-import { commands } from "./commands";
-import { config } from "../config/config";
+import { config } from "./config/config";
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
-// When the client is ready, run this code (only once).
-// The distinction between `client: Client<boolean>` and `readyClient: Client<true>` is important for TypeScript developers.
-// It makes some properties non-nullable.
-client.once(Events.ClientReady, (readyClient) => {
-  console.log(`Ready! Logged in as ${readyClient.user.tag}`);
-});
-
 client.commands = new Collection();
-
 const foldersPath = path.join(__dirname, "commands");
 const commandFolders = fs.readdirSync(foldersPath);
 
@@ -41,6 +32,10 @@ for (const folder of commandFolders) {
     }
   }
 }
+
+client.once(Events.ClientReady, (readyClient) => {
+  console.log(`Ready! Logged in as ${readyClient.user.tag}`);
+});
 
 client.on(Events.InteractionCreate, async (interaction) => {
   if (!interaction.isChatInputCommand()) return;
