@@ -6,7 +6,7 @@ import {
   SlashCommandBuilder,
 } from "discord.js";
 
-const data = new SlashCommandBuilder()
+export const data = new SlashCommandBuilder()
   .setName("echo")
   .setDescription("Replies with your input!")
   .addStringOption((option) =>
